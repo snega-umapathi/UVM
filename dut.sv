@@ -18,6 +18,7 @@ endmodule
 
 //RNF behaviour
 module rnf(
+  input clk,
   input endpoint_data,
   input endpoint_addr,//this should be driven by the uvm?
   output reg txreq,
