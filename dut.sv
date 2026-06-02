@@ -19,8 +19,10 @@ endmodule
 //RNF behaviour
 module rnf(
   input clk,
-  input endpoint_data,
-  input endpoint_addr,//this should be driven by the uvm?
+  input write_endpoint_data,
+  input read_endpoint_data,
+  input write_endpoint_addr,//this should be driven by the uvm?
+  input read_endpoint_addr,
   output reg txreq,
   output reg txdatflit,
   input reg bidresp,
@@ -31,12 +33,11 @@ module rnf(
       assign WRITEREQ = 1;
       always@(posedge clk)begin
         //need to send a write transaction: so first need to send a TXREQ
-        txreq = 1;
-        #5
+        txreq = write_endpoint_addr;
          if bidresp != x begin 
-           txdatflit = {endpoint_addr,endpoint_data};
+           txdatflit = write_endpoint_data;
          end
-      end 
+      end
     end //end of writereq
   readreq: begin
     assign READREQ = 1;
